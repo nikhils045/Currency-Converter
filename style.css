@@ -16,13 +16,17 @@ body {
   background-color: #ffffff;
   padding: 2rem;
   min-height: 45vh;
-  width: 40vh;
+  min-width: 42vh;
   border-radius: 1rem;
   box-shadow: 1px 8px 10px -2px black;
 }
 
 form {
-  margin: 1rem 0;
+  margin: 1.5rem 0;
+}
+
+form p {
+  font-size: 110%;
 }
 
 form select,
