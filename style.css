@@ -81,10 +81,11 @@ form input {
 
 form button {
   height: 3rem;
-  background-color: #86246f;
+  background-color: #86226f;
   color: #fff;
   font-size: 1rem;
   cursor: pointer;
+  transition: background-color 0.7s ease-in-out;
 }
 
 form button:hover {
