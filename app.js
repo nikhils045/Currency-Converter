@@ -39,6 +39,8 @@ const updateExchangeRate = async () => {
   if (amtVal === "" || amtVal < 1) {
     amtVal = 1;
     amount.value = 1;
+  }else if (fromCurr.value === toCurr.value) {
+    msg.innerHTML = `BOTH OPTIONS ARE SAME, CHANGE ANYONE`;
   }
 
   const API_KEY = `https://api.frankfurter.app/latest?amount=${amtVal}&from=${fromCurr.value}&to=${toCurr.value}`;
