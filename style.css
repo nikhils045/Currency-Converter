@@ -36,6 +36,10 @@ form p {
   font-size: 110%;
 }
 
+input {
+  font-weight: 500;
+}
+
 form select,
 button,
 input {
