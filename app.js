@@ -46,11 +46,20 @@ const updateExchangeRate = async () => {
   }
 
   const API_URL = `https://api.frankfurter.app/latest?amount=${amount}&from=${fromCurr.value}&to=${toCurr.value}`;
-  let response = await fetch(API_URL);
-  let data = await response.json();
-  let rate = data.rates[toCurr.value];
-  msg.innerText = `${amount} ${fromCurr.value} = ${rate} ${toCurr.value}`;
-  msg.style.color = "black";
+  try {
+    let response = await fetch(API_URL);
+    if (!response.ok) {
+      throw new Error(`Error fetching exchange rate: ${response.status}`);
+    }
+    let data = await response.json();
+    let rate = data.rates[toCurr.value];
+    msg.innerText = `${amount} ${fromCurr.value} = ${rate} ${toCurr.value}`;
+    msg.style.color = "black";
+  } catch (error) {
+    console.error("Error:", error);
+    msg.innerText = "An error occurred. Please try again later.";
+    msg.style.color = "red";
+  }
 };
 
 // Adding Event Listener to Buttons
