@@ -37,6 +37,7 @@ form p {
 }
 
 input {
+  text-align: center;
   font-weight: 500;
 }
 
@@ -99,7 +100,7 @@ form button {
   color: #fff;
   font-size: 1rem;
   cursor: pointer;
-  transition: background-color 0.7s ease-in-out;
+  transition: all 0.6s ease-in-out;
 }
 
 form button:hover {
