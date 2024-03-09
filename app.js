@@ -11,14 +11,14 @@ for (let select of dropdowns) {
     option.innerHTML = currCode;
     option.value = currCode;
     select.append(option);
-    if (currCode == "USD" && select.name == "from") {
-      option.selected = "selected";
-    } else if (currCode == "INR" && select.name == "to") {
-      option.selected = "selected";
+    if (currCode === "USD" && select.name === "from") {
+      option.selected = true;
+    } else if (currCode === "INR" && select.name === "to") {
+      option.selected = true;
     }
   }
 
-  select.addEventListener("click", (evt) => {
+  select.addEventListener("change", (evt) => {
     updateFlag(evt.target);
   });
 }
@@ -27,27 +27,30 @@ for (let select of dropdowns) {
 const updateFlag = (element) => {
   let currCode = element.value;
   let countryCode = countryList[currCode];
-  let newSrc = `https://flagsapi.com/${countryCode}/flat/64.png`;
+  let flagSrc = `https://flagsapi.com/${countryCode}/flat/64.png`;
   let img = element.parentElement.querySelector("img");
-  img.src = newSrc;
+  img.src = flagSrc;
 };
 
 // Converting Amount and Displaying Result
 const updateExchangeRate = async () => {
-  let amount = document.querySelector(".amount input");
-  let amtVal = amount.value;
-  if (amtVal === "" || amtVal < 1) {
-    amtVal = 1;
-    amount.value = 1;
-  }else if (fromCurr.value === toCurr.value) {
-    msg.innerHTML = `BOTH OPTIONS ARE SAME, CHANGE ANYONE`;
+  let amount = document.querySelector(".amount input").value;
+  if (amount === "" || amount <= 0) {
+    msg.innerHTML = "Please enter a valid amount (Minimum 0.1)";
+    msg.style.color = "red";
+    return;
+  } else if (fromCurr.value === toCurr.value) {
+    msg.innerHTML = "Both currencies are same. Please choose different ones.";
+    msg.style.color = "red";
+    return;
   }
 
-  const API_KEY = `https://api.frankfurter.app/latest?amount=${amtVal}&from=${fromCurr.value}&to=${toCurr.value}`;
-  let response = await fetch(API_KEY);
+  const API_URL = `https://api.frankfurter.app/latest?amount=${amount}&from=${fromCurr.value}&to=${toCurr.value}`;
+  let response = await fetch(API_URL);
   let data = await response.json();
   let rate = data.rates[toCurr.value];
-  msg.innerText = `${amtVal} ${fromCurr.value} = ${rate} ${toCurr.value}`;
+  msg.innerText = `${amount} ${fromCurr.value} = ${rate} ${toCurr.value}`;
+  msg.style.color = "black";
 };
 
 // Adding Event Listener to Buttons
@@ -56,7 +59,7 @@ btn.addEventListener("click", (evt) => {
   updateExchangeRate();
 });
 
-// Whenever Page refreshes Result will show of predefined value
+// Update on page load
 window.addEventListener("load", () => {
   updateExchangeRate();
 });
